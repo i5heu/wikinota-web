@@ -16,6 +16,12 @@ function CurentTimestamp(){
 }
 
 
+Vue.directive('focus', {
+    inserted: function (el) {
+        el.focus()
+    }
+})
+
 
 var filter = function(text, length, clamp){
     clamp = clamp || '...';
@@ -248,6 +254,20 @@ Vue.component("wn-menue", {
   beforeMount() {}
 })
 
+Vue.component("wn-search", {
+  data: function() {
+    return {
+      searchOpen: false
+    }
+  },
+  methods: {
+    focusOnSearch: function() {
+    }
+  },
+  beforeMount() {}
+})
+
+
 const router = new VueRouter({
   routes: [
     // dynamische Segmente beginnen mit Doppelpunkt
@@ -278,6 +298,11 @@ const router = new VueRouter({
       path: '/geldlog',
       name: "geldlog",
       component: Geldlog
+    },
+    {
+      path: '/s/:searchterm',
+      name: "search",
+      component: Search
     }
   ]
 })

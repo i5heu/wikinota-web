@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Wikinota</title>
+  <link rel="stylesheet" href="/static/css/main.css" type="text/css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+  <style>
+    .GoodReadCSS {
+      font-family: 'Ubuntu', sans-serif;
+    }
+  </style>
+  <link href="/static/css/GoodReadCSS/GoodReadCSS.css" rel="stylesheet">
+</head>
+
+<body>
+  <div id="root">
+    <header id="header">
+      <wn-search>
+        <div id="headerbar">
+          <button class="headerelement" id="homebutton"><router-link name="home" id="HeaderHome" to="/"><i class="fa fa-home" aria-hidden="true"></i></router-link></button>
+          <input type="text" class="headerelement" id="searchinput"></input><button class="headerelement" id="searchbutton"><i class="fa fa-search" aria-hidden="true"></i></button>
+          <button class="headerelement" v-on:click="menue = !menue" id="menuebutton">☰</button>
+          <offsync></offsync>
+        </div>
+      </wn-search>
+    </header>
+    <div id="spacer"></div>
+    <wn-menue id="menue" inline-template>
+      <transition name="slide-fade">
+        <div id="wn-menue" v-if="menue">
+          <ul class="menueSidebarTable" v-on:click="menue = false">
+            <li>
+              <router-link class="noDecoration LinkButton" :to="{ name: 'geldlog'}">Geldlog</router-link>
+            </li>
+            <li>
+              <router-link class="noDecoration LinkButton" :to="{ name: 'NewPage'}">New Page</router-link>
+            </li>
+          </ul>
+        </div>
+      </transition>
+    </wn-menue>
+
+    <wn-login ref="wn-login" inline-template>
+      <div v-show="CheckModalvar() == true" style="display:none;" class="modal-mask">
+        <div v-if="modalvar == 'HashSave'">
+          <div class="modal" id="AppLogin">
+            <input type="password" @keyup.enter="HashSave(message)" v-model="message" placeholder="insert password" /><br>
+            <button v-on:click="HashSave(message)">Login</button>
+
+            <p>Hash: {{ AdminHash }}</p>
+          </div>
+        </div>
+      </div>
+    </wn-login>
+
+
+
+
+    <router-view></router-view>
+
+
+  </div>
+  <!--ROOT DIV END -->
+
+  <script>
+    /* SET THE SPACER TO HEIGHT OF HEADER */
+    document.addEventListener("DOMContentLoaded", function(event) {
+      if (document.getElementById('header').scrollHeight != null) {
+        var h = document.getElementById('header').scrollHeight;
+        h += "px"
+        document.getElementById('spacer').style.height = h;
+        console.log("Spacer set to -> ", h);
+      }
+    });
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jshashes/1.0.7/hashes.min.js" integrity="sha256-H7hBuovONQQrY3zESq6MXx+b5Q3ovOY03taLJUaMauk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pouchdb@6.3.4/dist/pouchdb.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-router@3.0.1/dist/vue-router.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-focus@2.1.0/dist/vue-focus.common.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@0.3.6/lib/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/moment@2.19.1/moment.min.js"></script>
+  <script src="/static/js/OffSync.js"></script>
+  <script src="/static/js/desk.js"></script>
+  <script src="/static/js/geldlog.js"></script>
+  <script src="/static/js/pedit.js"></script>
+  <script src="/static/js/main.js"></script>
+
+</body>
+
+</html>

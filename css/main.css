@@ -1,0 +1,301 @@
+/*! minireset.css v0.0.3 | MIT License | github.com/jgthms/minireset.css*/
+html,body,p,ol,ul,li,dl,dt,dd,blockquote,figure,fieldset,legend,textarea,pre,iframe,hr,h1,h2,h3,h4,h5,h6{margin:0;padding:0}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}ul{list-style:none}
+button,input,select,textarea{margin:0}html{box-sizing:border-box}*,*:before,*:after{box-sizing:inherit}
+img,embed,iframe,object,audio,video{height:auto;max-width:100%}iframe{border:0}table{border-collapse:collapse;border-spacing:0}td,th{padding:0;text-align:left}
+
+/*######################## TEXT #####################*/
+html{
+  font-family: 'Ubuntu', sans-serif;
+}
+
+h1,h2{
+  display: block;
+  border-left: 1px solid black;
+  font-size: 1.3em;
+}
+h1{
+  font-size: 1.8em;
+}
+
+
+.Text{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.namespace{
+  background: #014663;
+  color: #fff;
+  border-radius: 5px;
+  padding-left: 3px;
+  padding-right: 3px;
+  min-width: 30px;
+  min-height: 1em;
+}
+
+.time{
+  font-size: 0.8em;
+}
+
+.noDecoration, .noDecoration a{
+  text-decoration: none;
+  color: inherit;
+}
+
+.LinkButton{
+  font-size: 110%;
+  padding: 5px;
+  margin:10px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+}
+
+.EditButton{
+  float: right;
+  font-size: 110%;
+  padding: 5px;
+  background: black;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 5px;
+}
+
+table{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+tr,td{
+  padding: 2px;
+}
+
+tr:nth-child(even) {
+    background-color: #e6e6e6;
+}
+
+.warn{
+  background: #ff4040;
+  color: black;
+  padding:3px;
+  margin:2px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+textarea{
+  width: 100%;
+  min-height: 100px;
+}
+
+.tags{
+  width: 100%;
+}
+
+button{
+  font-size: 105%;
+  background-color: #014663;
+  color: #fff;
+  border:0;
+  border-radius: 3px;
+  margin:5px;
+}
+
+button:disabled,
+button[disabled]{
+  background-color: #7cc4e2;
+}
+
+/*############### STRUCTURE ################*/
+body{
+  background: #f7f7f7;
+}
+
+header {
+  position: fixed;
+  top:0;
+  left:0;
+  width: 100%;
+}
+
+#headerbar{
+  background: #014663;
+  z-index: 1000;
+}
+
+#menue{
+  position: fixed;
+  right: 0;
+  float: right;
+  padding:20px 10px 5px 10px;
+  min-width: 100px;
+  background: #000;
+  color: #fff;
+  height: 100%;
+  z-index: 1000;
+}
+
+
+.headerelement{
+  background: #00748a;
+  color: #fff;
+  height: 2em;
+  border:0;
+  padding:0;
+  margin:0;
+  font-size: 1em;
+  padding-left:10px;
+  padding-right:10px;
+  outline: none;
+  border-radius: 0;
+}
+
+#HeaderHome {
+    text-decoration: none!important;
+    color: #fff;
+}
+
+#searchinput{
+  margin:0;
+  padding:0;
+  background: #004556;
+  color:#fff;
+}
+
+#searchbutton{
+  border:0;
+  background: #008fab;
+  color:#fff;
+}
+
+#menuebutton{
+  float: right;
+}
+
+
+
+.menueSidebarTable li{
+    padding-bottom: 20px;
+}
+
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: table;
+  transition: opacity .3s ease;
+}
+
+.modal {
+  background: #fff;
+  padding:10px;
+  border:1px solid black;
+  border-radius: 8px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#spacer{
+  height:35px;
+  width: 100%;
+  display: block;
+
+}
+
+
+/*###################### MENUE ######################*/
+
+#wn-menue{
+  float: right;
+  background: black;
+  color: #fff;
+  min-height: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+
+
+/*################ CONTENT #######################*/
+
+#content{
+  display: block;
+  height: 100%;
+  width:100%;
+  max-width: 600px;
+  margin:0 auto 0 auto;
+  padding:10px;
+  background: #fff;
+}
+
+
+
+/*###################### DESK ######################*/
+.desk{
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
+  width: 100%;
+  height:  100%;
+}
+
+.tile{
+  min-height: 300px;
+  max-height: 300px;
+  max-width: 100%;
+  overflow: auto;
+  border:1px solid black;
+  padding: 5px;
+}
+
+
+
+
+
+/*################ OffSync ################*/
+#OffSync{
+  display:inline-block;
+  font-size: 25px;
+  line-height: 30px;
+  height: 32px;
+  float: right;
+  color: #fff;
+  vertical-align: middle;
+}
+
+
+/*############# GLOBAL CALLSES ###################*/
+
+
+
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
+
+.fancyinput input, .fancyinput textarea{
+  background: #efefef;
+  border: 0;
+  border-radius: 5px;
+  font-size: 110%;
+  margin:2px;
+}
+
+.edit{
+  border-left:1px solid #ff0000;
+}

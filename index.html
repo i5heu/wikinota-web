@@ -12,13 +12,13 @@
   <meta name="theme-color" content="#000">
 
 
-	<link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
-	<link rel="manifest" href="/static/favicon/manifest.json">
-	<link rel="mask-icon" href="/static/favicon/safari-pinned-tab.svg" color="#000000">
-	<link rel="shortcut icon" href="/static/favicon/favicon.ico">
-	<meta name="msapplication-config" content="/static/favicon/browserconfig.xml">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/static/favicon/manifest.json">
+  <link rel="mask-icon" href="/static/favicon/safari-pinned-tab.svg" color="#000000">
+  <link rel="shortcut icon" href="/static/favicon/favicon.ico">
+  <meta name="msapplication-config" content="/static/favicon/browserconfig.xml">
 
 
 
@@ -45,11 +45,11 @@
             <button class="headerelement" v-on:click="searchOpen = false" id="homebutton"><i class="fa fa-times" aria-hidden="true"></i></button>
           </span>
           <span v-else>
-           <button class="headerelement" id="homebutton"><router-link name="home" id="HeaderHome" to="/"><i class="fa fa-home" aria-hidden="true"></i></router-link></button>
-          </span>
+           <router-link   id="HeaderHome" :to="{ name : 'home' }"><button class="headerelement"><i class="fa fa-home" aria-hidden="true"></i></button></router-link>
+         </span>
           <span v-if="searchOpen == true">
 
-            <input type="text" class="headerelement" v-focus id="searchinput"></input><button class="headerelement" id="searchbutton"><i class="fa fa-search" aria-hidden="true"></i></button>
+            <input type="text" @focus="searchOpen = true" class="headerelement" v-on:keyup.enter="SearchEvaluator" v-focus id="searchinput" v-model="SearchQery"></input><button class="headerelement" v-on:click="SearchEvaluator" id="searchbutton"><i class="fa fa-search" aria-hidden="true"></i></button>
           </span>
           <span v-else>
            <button class="headerelement" id="searchbutton" v-on:click="searchOpen = !searchOpen"><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -107,6 +107,8 @@
         console.log("Spacer set to -> ", h);
       }
     });
+
+
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jshashes/1.0.7/hashes.min.js" integrity="sha256-H7hBuovONQQrY3zESq6MXx+b5Q3ovOY03taLJUaMauk=" crossorigin="anonymous"></script>
@@ -122,27 +124,27 @@
   <script src="/static/js/desk.js"></script>
   <script src="/static/js/geldlog.js"></script>
   <script src="/static/js/pedit.js"></script>
+  <script src="/static/js/search.js"></script>
   <script src="/static/js/main.js"></script>
 
 
   <script>
-  window.addEventListener('beforeinstallprompt', function(e) {
-  // beforeinstallprompt Event fired
+    window.addEventListener('beforeinstallprompt', function(e) {
+      // beforeinstallprompt Event fired
 
-  // e.userChoice will return a Promise.
-  // For more details read: https://developers.google.com/web/fundamentals/getting-started/primers/promises
-  e.userChoice.then(function(choiceResult) {
+      // e.userChoice will return a Promise.
+      // For more details read: https://developers.google.com/web/fundamentals/getting-started/primers/promises
+      e.userChoice.then(function(choiceResult) {
 
-    console.log(choiceResult.outcome);
+        console.log(choiceResult.outcome);
 
-    if(choiceResult.outcome == 'dismissed') {
-      console.log('User cancelled home screen install');
-    }
-    else {
-      console.log('User added to home screen');
-    }
-  });
-});
+        if (choiceResult.outcome == 'dismissed') {
+          console.log('User cancelled home screen install');
+        } else {
+          console.log('User added to home screen');
+        }
+      });
+    });
   </script>
 
 </body>

@@ -136,6 +136,7 @@ header {
 
 
 .headerelement{
+  display: inline;
   background: #00748a;
   color: #fff;
   height: 2em;
@@ -150,8 +151,10 @@ header {
 }
 
 #HeaderHome {
+    display: inline-block;
     text-decoration: none!important;
     color: #fff;
+    height: 2em;
 }
 
 #searchinput{
@@ -286,6 +289,10 @@ header {
   opacity: 0;
 }
 
+.fancytable td{
+  padding-left: 3px;
+  border-left: 1px solid black;
+}
 
 .fancyinput input, .fancyinput textarea{
   background: #efefef;

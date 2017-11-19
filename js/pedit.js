@@ -34,6 +34,10 @@ const pEdit = {
       <h1 class="edit" contenteditable="true" @blur="updateHtml" name="Title2">{{ PC.Title2 }}</h1>
       <table class="time">
         <tr>
+          <td>ID </td>
+          <td>{{ PC.ItemID }}</td>
+        </tr>
+        <tr>
           <td>createt </td>
           <td>{{ PC.Timecreate }}</td>
         </tr>
@@ -87,10 +91,21 @@ const pEdit = {
         console.log("API-", response.status, "->", AdminHash);
 
         // get status text
-        response.statusText;
+        if (response.body.Status == "OK") {
+          this.loading = false
+          router.push({
+            name: 'page',
+            params: {
+              title1: response.body.Title1,
+              title2: response.body.Title2
+            }
+          })
+        } else {
 
-        this.loading = false
-        this.GetPage()
+        }
+
+
+
         return this.PC
       }, response => {
         // error callback
@@ -100,7 +115,7 @@ const pEdit = {
     CreateEmptyPage: function() {
       this.PC = "NewPage"
 
-      var mokupjson =`
+      var mokupjson = `
 {"DATA":[{"APP":"page","Timecreate":"0001-01-01T00:00:00Z","Timelastedit":"","Public":false,"Title1":"main","Title2":"main","Text1":"","Text2":"","Tags1":"","Num1":{"Float64":0,"Valid":true},"Num2":{"Float64":0,"Valid":true},"Num3":{"Float64":0,"Valid":true}}]}
       `
 
@@ -121,7 +136,7 @@ const pEdit = {
         this.PC.APP = this.APP
       }
 
-      if(this.PC.Timecreate == "0001-01-01T00:00:00Z"){
+      if (this.PC.Timecreate == "0001-01-01T00:00:00Z") {
         this.PC.Timecreate = CurentTimestamp()
       }
 
@@ -171,7 +186,7 @@ const pEdit = {
           this.PC.APP = this.APP
         }
 
-        if(this.PC.Timecreate == "0001-01-01T00:00:00Z"){
+        if (this.PC.Timecreate == "0001-01-01T00:00:00Z") {
           this.PC.Timecreate = CurentTimestamp()
         }
 
@@ -187,9 +202,9 @@ const pEdit = {
   },
   beforeMount() {
     console.log("HAHAHAHAHH");
-    if(this.new == true){
+    if (this.new == true) {
       this.CreateEmptyPage()
-    }else{
+    } else {
       this.GetPage()
     }
 

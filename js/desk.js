@@ -20,6 +20,54 @@ var GetDesktopPageTimeCreate = Vue.component("GetDesktopPageTimeCreate", {
   `
 })
 
+
+var DesktopPageCategory = Vue.component("DesktopPageCategory", {
+  props: ["ajson"],
+  data: function() {
+    return {
+      jsontmp: ""
+    }
+  },
+  template: `
+  <div class="tile">
+    Namespaces
+    <table>
+        <tr v-for="item in ajson">
+
+          <td><router-link :to="{ name: 'namespace', params: { title1: item.Title1}}">{{ item.Title1 }}</router-link></td>
+        </tr>
+    </table>
+  </div>
+  `
+})
+
+
+var DeskEventlog = Vue.component("DeskEventlog", {
+  props: ["ajson"],
+  data: function() {
+    return {
+      jsontmp: ""
+    }
+  },
+  template: `
+  <div class="tile">
+    PAGES
+    <table>
+        <tr>
+          <th>ID</th>
+          <th>APP</th>
+          <th>Name</th>
+        </tr>
+        <tr v-for="item in ajson">
+          <td>{{item.ID}}</td>
+          <td>{{item.APP}}</td>
+          <td>{{ item.Name }}</td>
+        </tr>
+    </table>
+  </div>
+  `
+})
+
 var DeskGeldlog = Vue.component("DeskGeldlog", {
   props: ["ajson"],
   data: function() {
@@ -59,11 +107,6 @@ var DeskGeldlog = Vue.component("DeskGeldlog", {
 
 
 
-
-
-
-
-
 const GetDesktop = {
   name: "GetDesktop",
   data: function() {
@@ -77,6 +120,8 @@ const GetDesktop = {
     <div v-if="loading == false" class="desk">
       <GetDesktopPageTimeCreate :ajson="DATA.Pages"></GetDesktopPageTimeCreate>
       <DeskGeldlog :ajson="DATA"></DeskGeldlog>
+      <DesktopPageCategory :ajson="DATA.Pagecategory"></DesktopPageCategory>
+      <DeskEventlog :ajson="DATA.Eventlog"></DeskEventlog>
     </div>
     <div v-else>
       <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
@@ -86,6 +131,10 @@ const GetDesktop = {
   `,
   methods: {
     GetPage: function() {
+      if(localStorage.AdminHash == "" || localStorage.AdminHash == null || localStorage.AdminHash == 0){
+        console.log("DESK- REUTRN NO AdminHash");
+        return
+      }
       // POST /someUrl
       this.$http.post(ApiUrl, {
         PWD: AdminHash,
@@ -107,12 +156,19 @@ const GetDesktop = {
 
         this.DATA = this.tmpjson
 
+        if(this.tmpjson.Status=="ERROR - NOT LOGGED IN"){
+          localStorage.AdminHash = ""
+          location.reload();
+        }
+
         for(DATAkey in this.DATA.Geldlog){
           this.DATA.Geldlog[DATAkey].Timecreate = moment(this.DATA.Geldlog[DATAkey].Timecreate).format("hh:mm DD.MM.YY");
         }
 
         console.log(this.DATA);
         this.loading = false
+
+
         return this.DATA
 
 

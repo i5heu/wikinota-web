@@ -10,7 +10,7 @@ var db = new PouchDB('wikinota_db');
 
 Vue.filter('truncate', filter);
 
-function CurentTimestamp(){
+function CurentTimestamp() {
   var d = new Date();
   var n = d.toISOString();
   return n
@@ -18,18 +18,18 @@ function CurentTimestamp(){
 
 
 Vue.directive('focus', {
-    inserted: function (el) {
-        el.focus()
-    }
+  inserted: function(el) {
+    el.focus()
+  }
 })
 
 
-var filter = function(text, length, clamp){
-    clamp = clamp || '...';
-    var node = document.createElement('div');
-    node.innerHTML = text;
-    var content = node.textContent;
-    return content.length > length ? content.slice(0, length) + clamp : content;
+var filter = function(text, length, clamp) {
+  clamp = clamp || '...';
+  var node = document.createElement('div');
+  node.innerHTML = text;
+  var content = node.textContent;
+  return content.length > length ? content.slice(0, length) + clamp : content;
 };
 
 
@@ -49,6 +49,8 @@ Vue.component("wn-login", {
         this.AdminHash = SHA512.hex(message)
         localStorage.AdminHash = this.AdminHash
         AdminHash = this.AdminHash
+
+        location.reload();
       }
     },
     LoginChek: function() {
@@ -98,6 +100,12 @@ const router = new VueRouter({
       component: GetDesktop,
     },
     {
+      path: '/p/:title1',
+      name: "namespace",
+      component: Search,
+      props: true
+    },
+    {
       path: '/p/:title1/:title2',
       name: "page",
       component: GetPageByURL,
@@ -113,12 +121,19 @@ const router = new VueRouter({
       path: '/newp',
       name: "NewPage",
       component: pEdit,
-      props: { new: true }
+      props: {
+        new: true
+      }
     },
     {
       path: '/geldlog',
       name: "geldlog",
       component: Geldlog
+    },
+    {
+      path: '/delete',
+      name: "delete",
+      component: DeleteManager
     },
     {
       path: '/s/:searchterm',

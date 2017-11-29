@@ -41,9 +41,13 @@ Vue.component("wn-search", {
 
 var Search = Vue.component("Search", {
   props:{
+    title1: {
+      type: String,
+      default: ""
+    },
     searchterm: {
       type: String,
-      default: "main"
+      default: ""
     }
   },
   data: function() {
@@ -55,12 +59,16 @@ var Search = Vue.component("Search", {
   },
   template: `
   <div class="content">
-    <h1>Search:"{{searchterm}}"</h1>
+    <div v-if="searchterm">
+      <h1>Search:"{{searchterm}}"</h1>
+    </div>
+    <div v-if="title1">
+      <h1>Namespace:"{{title1}}"</h1>
+    </div>
     <div v-if="loading == true">
       SPINNER
     </div>
     <div v-else>
-    aa
     <table class="fancytable">
       <tr>
       <th>Namespace</th>
@@ -93,7 +101,8 @@ var Search = Vue.component("Search", {
         PWD: AdminHash,
         Method: "ItemSearch",
         SearchAPP: "page",
-        SearchString: this.searchterm
+        SearchString: this.searchterm,
+        Title1 : this.title1
       }).then(response => {
 
         // get status

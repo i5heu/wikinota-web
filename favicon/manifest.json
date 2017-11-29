@@ -1,7 +1,7 @@
 {
     "name": "WikiNota",
     "short_name": "wiki" ,
-    "start_url": "http://192.168.178.30:8080/web#/" ,
+    "start_url": "http://localhost:8080/web#/" ,
     "icons": [
         {
             "src": "/static/favicon/android-chrome-192x192.png",

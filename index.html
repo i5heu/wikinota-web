@@ -70,6 +70,9 @@
             <li>
               <router-link class="noDecoration LinkButton" :to="{ name: 'NewPage'}">New Page</router-link>
             </li>
+            <li>
+              <router-link class="noDecoration LinkButton" :to="{ name: 'delete'}">delete</router-link>
+            </li>
           </ul>
         </div>
       </transition>
@@ -77,12 +80,12 @@
 
     <wn-login ref="wn-login" inline-template>
       <div v-show="CheckModalvar() == true" style="display:none;" class="modal-mask">
-        <div v-if="modalvar == 'HashSave'">
+        <div>
           <div class="modal" id="AppLogin">
+            fdsfds
             <input type="password" @keyup.enter="HashSave(message)" v-model="message" placeholder="insert password" /><br>
             <button v-on:click="HashSave(message)">Login</button>
 
-            <p>Hash: {{ AdminHash }}</p>
           </div>
         </div>
       </div>
@@ -107,8 +110,6 @@
         console.log("Spacer set to -> ", h);
       }
     });
-
-
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jshashes/1.0.7/hashes.min.js" integrity="sha256-H7hBuovONQQrY3zESq6MXx+b5Q3ovOY03taLJUaMauk=" crossorigin="anonymous"></script>
@@ -125,6 +126,7 @@
   <script src="/static/js/geldlog.js"></script>
   <script src="/static/js/pedit.js"></script>
   <script src="/static/js/search.js"></script>
+  <script src="/static/js/DeleteManager.js"></script>
   <script src="/static/js/main.js"></script>
 
 
@@ -145,6 +147,7 @@
         }
       });
     });
+
   </script>
 
 </body>

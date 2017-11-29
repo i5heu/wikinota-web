@@ -51,7 +51,7 @@ var DeskEventlog = Vue.component("DeskEventlog", {
   },
   template: `
   <div class="tile">
-    PAGES
+    Eventlog
     <table>
         <tr>
           <th>ID</th>

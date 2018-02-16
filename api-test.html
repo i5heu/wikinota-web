@@ -25,7 +25,10 @@
   <div id="app">
     URL:<br>
     <input v-model="ApiUrl"></input><br><br>
+    PWD:<br>
+    <input v-model="PWD"></input><br>
     JSON:<br>
+    <button v-on:click="Fill()" > FILL WITH STANDART </i></button><br>
     <textarea v-model="Text1"></textarea><br>
     <button v-on:click="SendEdit()" > SEND </i></button><br><br>
     ANSWER:<br>
@@ -59,7 +62,8 @@
     durationMicroS: "0.000",
     duration: "0",
     durationCLIENT: "0",
-    status : "have fun!"
+    status : "have fun!",
+    PWD: "NO PWD"
   },
   methods: {
     SendEdit: function() {
@@ -95,6 +99,19 @@
         // error callback
         console.log("API-ERROR");
       });
+    },
+    Fill: function(){
+      this.Text1 = `{"PWD":"`+this.PWD+`",
+      "Method":"create_item",
+      "DATA":{
+        "Path":"",
+        "APP":"",
+        "Title1":"",
+        "Title2":"",
+        "Text1":"",
+        "Text2":""
+      }
+    }`
     }
   }
 })

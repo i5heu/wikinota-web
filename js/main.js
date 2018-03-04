@@ -100,13 +100,13 @@ const router = new VueRouter({
       component: GetDesktop,
     },
     {
-      path: '/p/:title1',
+      path: '/h/:path',
       name: "namespace",
       component: Search,
       props: true
     },
     {
-      path: '/p/:title1/:title2',
+      path: '/p/:path',
       name: "page",
       component: GetPageByURL,
       props: true

@@ -11,8 +11,7 @@ var GetDesktopPageTimeCreate = Vue.component("GetDesktopPageTimeCreate", {
     <table>
         <tr v-for="item in ajson">
 
-          <td><span class="namespace">{{ item.Title1 }}</span></td>
-          <td><router-link :to="{ name: 'page', params: { title1: item.Title1, title2: item.Title2}}">{{ item.Title2 }}</router-link></td>
+          <td><router-link :to="{ name: 'page', params: { path: item.Path }}">{{ item.Path }}</router-link></td>
           <td>{{item.Public}}</td>
         </tr>
     </table>
@@ -118,7 +117,7 @@ const GetDesktop = {
   template: `
   <div>
     <div v-if="loading == false" class="desk">
-      <GetDesktopPageTimeCreate :ajson="DATA.Pages"></GetDesktopPageTimeCreate>
+      <GetDesktopPageTimeCreate :ajson="DATA.DATA.List"></GetDesktopPageTimeCreate>
       <DeskGeldlog :ajson="DATA"></DeskGeldlog>
       <DesktopPageCategory :ajson="DATA.Pagecategory"></DesktopPageCategory>
       <DeskEventlog :ajson="DATA.Eventlog"></DeskEventlog>
@@ -138,32 +137,35 @@ const GetDesktop = {
       // POST /someUrl
       this.$http.post(ApiUrl, {
         PWD: AdminHash,
-        Method: "Desk",
+        Method: "list",
+        DATA:{"ListModule":"ListArticleDesktop"},
       }).then(response => {
         // get status
         response.status;
 
-        console.log("API-", response.status, "->", AdminHash);
+        console.log("API-", response.status, "->", AdminHash, "-->",response.statusText);
 
-        // get status text
-        response.statusText;
 
         // get 'Expires' header
         response.headers.get('Expires');
 
         // get body data
-        this.tmpjson = JSON.parse(JSON.stringify(response.body));
+        this.tmpjson = JSON.parse(response.body);
 
         this.DATA = this.tmpjson
 
-        if(this.tmpjson.Status=="ERROR - NOT LOGGED IN"){
+        if(this.tmpjson.Error=="authentication failed"){
           localStorage.AdminHash = ""
           location.reload();
         }
 
-        for(DATAkey in this.DATA.Geldlog){
-          this.DATA.Geldlog[DATAkey].Timecreate = moment(this.DATA.Geldlog[DATAkey].Timecreate).format("hh:mm DD.MM.YY");
-        }
+        // for(DATAkey in this.DATA.List){
+        //   this.DATA.List[DATAkey].Timecreate = moment(this.DATA.List[DATAkey].Timecreate).format("hh:mm DD.MM.YY");
+        // }
+
+
+
+
 
         console.log(this.DATA);
         this.loading = false
@@ -195,11 +197,7 @@ const GetPageByURL = {
     }
   },
   props: {
-    title1: {
-      type: String,
-      default: "main"
-    },
-    title2: {
+    path: {
       type: String,
       default: "main"
     }
@@ -244,10 +242,11 @@ const GetPageByURL = {
       // POST /someUrl
       this.$http.post(ApiUrl, {
         PWD: AdminHash,
-        Method: "ItemIdRead",
-        APP: "page",
-        Title1: this.title1,
-        Title2: this.title2
+        Method: "list",
+        DATA:{
+          ListModule: "Path",
+          Path: this.path,
+        },
       }).then(response => {
 
         // get status
@@ -262,9 +261,9 @@ const GetPageByURL = {
         response.headers.get('Expires');
 
         // get body data
-        this.json = JSON.parse(JSON.stringify(response.body));
+        this.json = JSON.parse(response.body);
 
-        this.PC = this.json.DATA[0]
+        this.PC = this.json.DATA.List[0]
         this.PC.Text1 = marked(this.PC.Text1, {
           sanitize: true
         })

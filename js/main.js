@@ -112,7 +112,7 @@ const router = new VueRouter({
       props: true
     },
     {
-      path: '/p/:title1/:title2/edit',
+      path: '/p/:path/edit',
       name: "pedit",
       component: pEdit,
       props: true

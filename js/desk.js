@@ -209,8 +209,10 @@ const GetPageByURL = {
       <span class="sr-only">Loading...</span>
     </div>
     <div v-else>
-      <span class="namespace">{{ PC.Title1 }}</span><router-link class="EditButton" :to="{ name: 'pedit', params: { title1: PC.Title1, title2: PC.Title2 }}"><i class="fa fa-pencil" aria-hidden="true"></i></router-link>
-      <h1>{{ PC.Title2 }}</h1>
+    Path: <span class="namespace"  name="Path">{{PC.Path}}</span><br>
+    <router-link class="EditButton" :to="{ name: 'pedit', params: { path : PC.Path }}"><i class="fa fa-pencil" aria-hidden="true"></i></router-link>
+    Title1: <span  name="Title2">{{ PC.Title2 }}</span><br>
+    Title2: <span  name="Title1">{{PC.Title1}}</span>
       <table class="time">
         <tr>
           <td>createt </td>
@@ -268,7 +270,7 @@ const GetPageByURL = {
           sanitize: true
         })
 
-        console.log(this.PC.Title1);
+        console.log(this.PC.Path);
         this.loading = false
         return this.PC
 

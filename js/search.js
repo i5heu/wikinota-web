@@ -71,13 +71,15 @@ var Search = Vue.component("Search", {
     <div v-else>
     <table class="fancytable">
       <tr>
-      <th>Namespace</th>
-      <th>Title</th>
+      <th>Path</th>
+      <th>Title1</th>
+      <th>Title2</th>
       <th>Tags</th>
       <th>Public</th>
       </tr>
-      <tr v-for="item in SearchResult"  >
-          <td><span class="namespace">{{item.Title1}}</span></td>
+      <tr v-for="item in SearchResult.List"  >
+          <td><span >{{item.Path}}</span></td>
+          <td><span >{{item.Title1}}</span></td>
           <td class="namespnamespaceace"><router-link :to="{ name: 'page', params: { title1: item.Title1, title2: item.Title2}}">{{item.Title2}}</router-link></td>
           <td class="namespnamespaceace">{{item.Tags1}}</td>
           <td v-if="item.Public == true">
@@ -99,10 +101,11 @@ var Search = Vue.component("Search", {
       // POST /someUrl
       this.$http.post(ApiUrl, {
         PWD: AdminHash,
-        Method: "ItemSearch",
-        SearchAPP: "page",
-        SearchString: this.searchterm,
-        Title1 : this.title1
+        Method: "list",
+        DATA:{
+         ListModule: "ListFullSearch",
+         Searchterm : this.searchterm,
+        },
       }).then(response => {
 
         // get status
@@ -117,7 +120,7 @@ var Search = Vue.component("Search", {
         response.headers.get('Expires');
 
         // get body data
-        this.json = JSON.parse(JSON.stringify(response.body));
+        this.json = JSON.parse(response.body);
 
         this.PC = this.json.DATA
 

@@ -7,11 +7,7 @@ const pEdit = {
     }
   },
   props: {
-    title1: {
-      type: String,
-      default: "main"
-    },
-    title2: {
+    path: {
       type: String,
       default: "main"
     },
@@ -30,8 +26,9 @@ const pEdit = {
       <span class="sr-only">Loading...</span>
     </div>
     <div v-else>
-      <span class="namespace edit"contenteditable="true" @blur="updateHtml" name="Title1">{{PC.Title1}}</span>
-      <h1 class="edit" contenteditable="true" @blur="updateHtml" name="Title2">{{ PC.Title2 }}</h1>
+      Path: <span class="namespace edit"contenteditable="true" @blur="updateHtml" name="Path">{{PC.Path}}</span> TODO: CHEK FOR ARDY Existing<br>
+      Title1: <span class="edit" contenteditable="true" @blur="updateHtml" name="Title2">{{ PC.Title2 }}</span><br>
+      Title2: <span class="edit"contenteditable="true" @blur="updateHtml" name="Title1">{{PC.Title1}}</span>
       <table class="time">
         <tr>
           <td>ID </td>
@@ -45,7 +42,14 @@ const pEdit = {
           <td>lastedit </td>
           <td>{{ PC.Timelastedit }}</td>
         </tr>
-        public: {{PC.Public}}
+        <tr>
+          <td>public </td>
+          <td>{{PC.Public}}</td>
+        </tr>
+        <tr>
+          <td>APP </td>
+          <td>{{PC.APP}}</td>
+        </tr>
       </table>
       <textarea class="Text edit" v-model="PC.Text1">{{PC.Text1}}</textarea>
       <hr>
@@ -58,6 +62,11 @@ const pEdit = {
       <input class="tags edit" :value="PC.Tags1" v-model="PC.Tags1"></input>
     </div>
   <div v-on:click="SendEdit()" class="warn">SAVE <i class="fa fa-paper-plane" aria-hidden="true"></i></div>
+  <br>
+  <br>
+  <br>
+  NoSqlData (not working):
+  <input class="tags edit" :value="PC.NoSqlData" v-model="PC.NoSqlData"></input>
 
 
 </div>
@@ -73,35 +82,41 @@ const pEdit = {
       // POST /someUrl
       this.$http.post(ApiUrl, {
         PWD: AdminHash,
-        Method: "ItemWrite",
-        ItemID: this.PC.ItemID,
-        APP: this.PC.APP,
-        Timecreate: this.PC.Timecreate,
-        public: this.PC.public,
-        Title1: this.PC.Title1,
-        Title2: this.PC.Title2,
-        Text1: this.PC.Text1,
-        Text2: this.PC.Text2,
-        Tags1: this.PC.Tags1
+        Method: "create_item",
+        DATA: {
+          Path: this.PC.Path,
+          ItemID: this.PC.ItemID,
+          APP: this.PC.APP,
+          Timecreate: this.PC.Timecreate,
+          public: this.PC.public,
+          Title1: this.PC.Title1,
+          Title2: this.PC.Title2,
+          Text1: this.PC.Text1,
+          Text2: this.PC.Text2,
+          Tags1: this.PC.Tags1,
+          NoSqlData: this.PC.NoSqlData,
+        },
       }).then(response => {
 
-        // get status
+        // get status - for network error message - UI not yet written
         response.status;
 
-        console.log("API-", response.status, "->", AdminHash);
+        resJson = JSON.parse(response.body)
+
+
+        console.log("API- Write Item - ", AdminHash);
 
         // get status text
-        if (response.body.Status == "OK") {
+        if (resJson.Error == false) {
           this.loading = false
           router.push({
             name: 'page',
             params: {
-              title1: response.body.Title1,
-              title2: response.body.Title2
+              path: resJson.DATA.Path,
             }
           })
         } else {
-
+          //ToDo - Error message here pls.
         }
 
 
@@ -152,10 +167,11 @@ const pEdit = {
       // POST /someUrl
       this.$http.post(ApiUrl, {
         PWD: AdminHash,
-        Method: "ItemIdRead",
-        APP: "page",
-        Title1: this.title1,
-        Title2: this.title2
+        Method: "list",
+        DATA:{
+          ListModule: "Path",
+          Path: this.path,
+        },
       }).then(response => {
         // get status
         response.status
@@ -163,28 +179,16 @@ const pEdit = {
         console.log("API-", response.status, "->", AdminHash)
 
         // get status text
-        response.statusText
+        // response.statusText
 
         // get 'Expires' header
-        response.headers.get('Expires')
+        // response.headers.get('Expires')
 
         // get body data
-        this.json = JSON.parse(JSON.stringify(response.body))
-
-        this.PC = this.json.DATA[0]
-
-        if (this.PC.Title1 == "") {
-          this.PC.Title1 = "main"
-        }
+        this.json = JSON.parse(response.body)
 
 
-        if (this.PC.Title2 == "") {
-          this.PC.Title2 = "main"
-        }
-
-        if (this.PC.APP == "") {
-          this.PC.APP = this.APP
-        }
+        this.PC = this.json.DATA.List[0]
 
         if (this.PC.Timecreate == "0001-01-01T00:00:00Z") {
           this.PC.Timecreate = CurentTimestamp()

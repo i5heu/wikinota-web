@@ -1,3 +1,11 @@
+/*
+
+GELDLOG IS disabled BECAUSE ITS NOT AN MVP FEATURE!!!!
+
+
+*/
+
+
 const Geldlog = {
   name: "Geldlog",
   data: function() {
@@ -11,22 +19,27 @@ const Geldlog = {
       Sending: false,
     }
   },
+  // template: `
+  // <div id="content">
+  //   <div class="fancyinput">
+  //     Cat:<input v-model="Title1"></input><button @click="Title1 = 'food'">food</button><button @click="Title1 = 'transport'">transport</button><br>
+  //     Name:<input v-model="Title2"></input><br>
+  //     Amount:<input type="number" v-model.number="Num1"></input><br>
+  //     <button v-on:click="SendGeldlog" v-on:click="GetPage" :disabled="Sending">SEND <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+  //     <button v-on:click="GetPage" >Refresh <i class="fa fa-refresh" aria-hidden="true"></i></button>
+  //   </div>
+  //   <div v-if="loading == false">
+  //     <DeskGeldlog :ajson="DATA"></DeskGeldlog>
+  //   </div>
+  //   <div v-else>
+  //     <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+  //     <span class="sr-only">Loading...</span>
+  //   </div>
+  // </div>
+  // `,
   template: `
   <div id="content">
-    <div class="fancyinput">
-      Cat:<input v-model="Title1"></input><button @click="Title1 = 'food'">food</button><button @click="Title1 = 'transport'">transport</button><br>
-      Name:<input v-model="Title2"></input><br>
-      Amount:<input type="number" v-model.number="Num1"></input><br>
-      <button v-on:click="SendGeldlog" v-on:click="GetPage" :disabled="Sending">SEND <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-      <button v-on:click="GetPage" >Refresh <i class="fa fa-refresh" aria-hidden="true"></i></button>
-    </div>
-    <div v-if="loading == false">
-      <DeskGeldlog :ajson="DATA"></DeskGeldlog>
-    </div>
-    <div v-else>
-      <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
-      <span class="sr-only">Loading...</span>
-    </div>
+    GELDLOG IS disabled BECAUSE ITS NOT AN Minimum Viable Product FEATURE!!!!
   </div>
   `,
   methods: {

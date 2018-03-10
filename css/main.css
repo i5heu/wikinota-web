@@ -223,16 +223,32 @@ header {
 }
 
 
+/*################ Page #######################*/
+#Page{
+  display:flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+}
+
+
+/*################ PageHierarchy #######################*/
+#PageHierarchy{
+
+  float: left;
+}
+
 
 
 /*################ CONTENT #######################*/
 
 #content{
+  float: center;
   display: block;
   height: 100%;
   width:100%;
   max-width: 600px;
   margin:0 auto 0 auto;
+  min-margin-left: ;
   padding:10px;
   background: #fff;
 }

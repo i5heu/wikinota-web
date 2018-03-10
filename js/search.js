@@ -78,10 +78,10 @@ var Search = Vue.component("Search", {
       <th>Public</th>
       </tr>
       <tr v-for="item in SearchResult.List"  >
-          <td><span >{{item.Path}}</span></td>
+          <td><router-link :to="{ name: 'page', params: { path: item.Path}}">{{item.Path}}</router-link></td>
           <td><span >{{item.Title1}}</span></td>
-          <td class="namespnamespaceace"><router-link :to="{ name: 'page', params: { title1: item.Title1, title2: item.Title2}}">{{item.Title2}}</router-link></td>
-          <td class="namespnamespaceace">{{item.Tags1}}</td>
+          <td><span >{{item.Title2}}</span></td>
+          <td>{{item.Tags1}}</td>
           <td v-if="item.Public == true">
             PUBLIC
           </td>

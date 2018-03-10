@@ -183,7 +183,7 @@ const GetDesktop = {
     }
   },
   beforeMount() {
-    console.log("HAHAHAHAHH");
+    console.log("GetDesktop beforeMount triggerd");
     this.GetPage()
   }
 };
@@ -192,7 +192,8 @@ const GetPageByURL = {
   name: "GetPageByURL",
   data: function() {
     return {
-      PC: "HAAAXXX",
+      PC: "PageContend NO DATA",
+      PH :"PageHierarchy NO DATA",
       loading: true
     }
   },
@@ -203,6 +204,25 @@ const GetPageByURL = {
     }
   },
   template: `
+  <div id="Page">
+  <div id="PageHierarchy">
+    PageHierarchy:
+    <table>
+
+    <tr>
+      <th>Path</th>
+      <th>Title1</th>
+      <th>Title2</th>
+    </tr>
+    <tr v-for="item in PH">
+      <td><router-link :to="{ name: 'page', params: { path : item.Path }}">{{ item.Path }}</router-link></td>
+      <td><span >{{ item.Title1 }}</span></td>
+      <td><span >{{ item.Title2 }}</span></td>
+    </tr>
+
+
+    </table>
+  </div>
   <div id="content">
     <div v-if="loading == true">
       <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
@@ -237,9 +257,12 @@ const GetPageByURL = {
 
     </div>
 
+    </div>
 </div>
   `,
   methods: {
+
+    //GET ItemDATA
     GetPage: function() {
       // POST /someUrl
       this.$http.post(ApiUrl, {
@@ -281,10 +304,55 @@ const GetPageByURL = {
         // error callback
         console.log("API-ERROR");
       });
+
+
+      //GET PageHierarchy
+      this.$http.post(ApiUrl, {
+        PWD: AdminHash,
+        Method: "list",
+        DATA:{
+          ListModule: "PathHierarchy",
+          Path: this.path,
+        },
+      }).then(response => {
+
+        // get status
+      //  response.status;
+
+        console.log("API-", response.status, "->", AdminHash);
+
+        // get status text
+      //  response.statusText;
+
+        // get 'Expires' header
+        response.headers.get('Expires');
+
+        // get body data
+        tmpPH = JSON.parse(response.body);
+        this.PH = tmpPH.DATA.List
+        console.log("PH ----------",this.PH);
+        //this.loading = false
+        //return this.PC
+
+
+
+
+      }, response => {
+        // error callback
+        console.log("API-ERROR");
+      });
+
+
     }
   },
   beforeMount() {
-    console.log("HAHAHAHAHH");
+    console.log("GetPageByURL beforeMount triggerd");
     this.GetPage()
-  }
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log("GetPageByURL beforeMount triggerd");
+    next()
+    this.path = to.params.path
+    this.GetPage()
+}
 };

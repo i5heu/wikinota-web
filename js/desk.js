@@ -31,9 +31,9 @@ var DesktopPageCategory = Vue.component("DesktopPageCategory", {
   <div class="tile">
     Namespaces
     <table>
-        <tr v-for="item in ajson">
+        <tr v-for="item in ajson.List">
 
-          <td><router-link :to="{ name: 'namespace', params: { title1: item.Title1}}">{{ item.Title1 }}</router-link></td>
+          <td><router-link :to="{ name: 'namespace', params: { section: item.Sections}}">{{ item.Sections }}</router-link></td>
         </tr>
     </table>
   </div>
@@ -117,10 +117,10 @@ const GetDesktop = {
   template: `
   <div>
     <div v-if="loading == false" class="desk">
-      <GetDesktopPageTimeCreate :ajson="DATA.DATA.List"></GetDesktopPageTimeCreate>
+      <GetDesktopPageTimeCreate :ajson="DATA[0].DATA.List"></GetDesktopPageTimeCreate>
       <DeskGeldlog :ajson="DATA"></DeskGeldlog>
-      <DesktopPageCategory :ajson="DATA.Pagecategory"></DesktopPageCategory>
-      <DeskEventlog :ajson="DATA.Eventlog"></DeskEventlog>
+      <DesktopPageCategory :ajson="DATA[1].DATA"></DesktopPageCategory>
+      <!-- <DeskEventlog :ajson="DATA.Eventlog"></DeskEventlog>  EVENTLOG IS DISABLET BECAUSE OF MVP -->
     </div>
     <div v-else>
       <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
@@ -135,10 +135,20 @@ const GetDesktop = {
         return
       }
       // POST /someUrl
-      this.$http.post(ApiUrl, {
-        PWD: AdminHash,
-        Method: "list",
-        DATA:{"ListModule":"ListArticleDesktop"},
+      this.$http.post(MultiApiUrl, {
+
+          "MultiAPI":[
+            {
+              PWD: AdminHash,
+              Method: "list",
+              DATA:{"ListModule":"ListArticleDesktop"}
+            },
+            {
+              PWD: AdminHash,
+              Method: "list",
+              DATA:{"ListModule":"ListPathMainSection"}
+            },
+      ]
       }).then(response => {
         // get status
         response.status;
@@ -167,7 +177,7 @@ const GetDesktop = {
 
 
 
-        console.log(this.DATA);
+        console.log("DESKTOP-DATA:",this.DATA);
         this.loading = false
 
 
@@ -229,7 +239,10 @@ const GetPageByURL = {
       <span class="sr-only">Loading...</span>
     </div>
     <div v-else>
-    Path: <span class="namespace"  name="Path">{{PC.Path}}</span><br>
+    <div class="PathContainer">
+    <span class="namespace path" >{{PC.Path1}}</span><span class="path">{{PC.Path2}}</span>
+    </div>
+    <router-link class="EditButton" :to="{ name: 'pedit', params: { path : PC.Path }, query: { hierachyDown: true }}"><i class="fa fa-chevron-down"></i></router-link>
     <router-link class="EditButton" :to="{ name: 'pedit', params: { path : PC.Path }}"><i class="fa fa-pencil" aria-hidden="true"></i></router-link>
     Title1: <span  name="Title2">{{ PC.Title2 }}</span><br>
     Title2: <span  name="Title1">{{PC.Title1}}</span>
@@ -333,6 +346,15 @@ const GetPageByURL = {
         console.log("PH ----------",this.PH);
         //this.loading = false
         //return this.PC
+
+        var Path2 = this.PC.Path
+        var Path2tmp = Path2.substring(Path2.indexOf(':')+1)
+        this.PC.Path2 = Path2tmp
+
+        var Path1 = this.PC.Path
+        var Path1tmp = Path1.substring(0,Path1.indexOf(':')+1)
+        this.PC.Path1 = Path1tmp
+
 
 
 

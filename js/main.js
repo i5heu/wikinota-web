@@ -1,5 +1,6 @@
 var SHA512 = new Hashes.SHA512
 var ApiUrl = "/api"
+var MultiApiUrl = "/multiapi"
 var AdminHash = localStorage.AdminHash
 Vue.config.devtools = true
 Vue.use(VueRouter)
@@ -15,6 +16,7 @@ function CurentTimestamp() {
   var n = d.toISOString();
   return n
 }
+
 
 
 Vue.directive('focus', {
@@ -100,7 +102,7 @@ const router = new VueRouter({
       component: GetDesktop,
     },
     {
-      path: '/h/:path',
+      path: '/h/:section',
       name: "namespace",
       component: Search,
       props: true
@@ -159,3 +161,8 @@ var app = new Vue({
   beforeMount() {}
 
 })
+
+
+function HighlightPath(path){
+  return "<span background='red'>PAAAA</span> "
+}

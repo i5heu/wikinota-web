@@ -18,6 +18,13 @@ const pEdit = {
       default: "APP"
     }
   },
+  watch: {
+      '$route.path' (to, from) {
+        console.log("PEDIT:","PATH CHANGE TRIGGER UPDATE HANDLER");
+        PeditUpdatehandler(this)
+      }
+
+    },
   template: `
   <div id="content">
   <div v-on:click="SendEdit()" class="warn">SAVE <i class="fa fa-paper-plane" aria-hidden="true"></i></div>
@@ -26,7 +33,10 @@ const pEdit = {
       <span class="sr-only">Loading...</span>
     </div>
     <div v-else>
-      Path: <span class="namespace edit"contenteditable="true" @blur="updateHtml" name="Path">{{PC.Path}}</span> TODO: CHEK FOR ARDY Existing<br>
+      <div class="PathContainer">
+      <span class="namespace edit path"contenteditable="true" @blur="updateHtml" name="Path">{{PC.Path}}</span><span class="path" contenteditable="true" @blur="updateHtml" name="Path2">{{PC.Path2}}</span>
+      </div>
+
       Title1: <span class="edit" contenteditable="true" @blur="updateHtml" name="Title2">{{ PC.Title2 }}</span><br>
       Title2: <span class="edit"contenteditable="true" @blur="updateHtml" name="Title1">{{PC.Title1}}</span>
       <table class="time">
@@ -84,7 +94,7 @@ const pEdit = {
         PWD: AdminHash,
         Method: "create_item",
         DATA: {
-          Path: this.PC.Path,
+          Path: this.PC.Path+this.PC.Path2,
           ItemID: this.PC.ItemID,
           APP: this.PC.APP,
           Timecreate: this.PC.Timecreate,
@@ -138,6 +148,31 @@ const pEdit = {
 
       this.PC = this.json.DATA[0]
 
+      if (this.$route.params.path == undefined) {
+        this.PC.Path = "page:"
+      }else{
+        this.PC.Path = this.$route.params.path
+      }
+
+
+      if (this.$route.query.hierachyDown != true){
+        var Path2 = this.PC.Path
+        var Path2tmp = Path2.substring(Path2.indexOf(':')+1)
+        this.PC.Path2 = Path2tmp
+
+
+        var Path1 = this.PC.Path
+        var Path1tmp = Path1.substring(0,Path1.indexOf(':')+1)
+        this.PC.Path = Path1tmp
+      }else{
+        this.PC.Path += ":"
+      }
+
+
+      if (this.PC.Path2 == undefined) {
+        this.PC.Path2 = "main"
+      }
+
       if (this.PC.Title1 == undefined) {
         this.PC.Title1 = "main"
       }
@@ -161,7 +196,6 @@ const pEdit = {
       return this.PC
 
     },
-
     GetPage: function() {
       this.loading = true
       // POST /someUrl
@@ -181,6 +215,7 @@ const pEdit = {
         // get status text
         // response.statusText
 
+
         // get 'Expires' header
         // response.headers.get('Expires')
 
@@ -194,6 +229,15 @@ const pEdit = {
           this.PC.Timecreate = CurentTimestamp()
         }
 
+        var Path2 = this.PC.Path
+        var Path2tmp = Path2.substring(Path2.indexOf(':')+1)
+        this.PC.Path2 = Path2tmp
+
+        var Path1 = this.PC.Path
+        var Path1tmp = Path1.substring(0,Path1.indexOf(':')+1)
+        this.PC.Path = Path1tmp
+
+
         console.log("----------->", this.PC)
 
         this.loading = false
@@ -205,12 +249,21 @@ const pEdit = {
     }
   },
   beforeMount() {
-    console.log("HAHAHAHAHH");
-    if (this.new == true) {
-      this.CreateEmptyPage()
-    } else {
-      this.GetPage()
-    }
-
-  }
+    console.log("beforeMount");
+  PeditUpdatehandler(this)
+}
 };
+
+
+function PeditUpdatehandler(this2) {
+  if (this2.new == true) {
+    this2.CreateEmptyPage()
+  } else {
+    if (this2.$route.query.hierachyDown != true){
+      this2.GetPage()
+    }else{
+      console.log("CreateEmptyPage");
+      this2.CreateEmptyPage()
+    }
+  }
+}

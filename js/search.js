@@ -41,7 +41,7 @@ Vue.component("wn-search", {
 
 var Search = Vue.component("Search", {
   props:{
-    title1: {
+    section: {
       type: String,
       default: ""
     },
@@ -62,8 +62,8 @@ var Search = Vue.component("Search", {
     <div v-if="searchterm">
       <h1>Search:"{{searchterm}}"</h1>
     </div>
-    <div v-if="title1">
-      <h1>Namespace:"{{title1}}"</h1>
+    <div v-if="section">
+      <h1>Section:"{{section}}"</h1>
     </div>
     <div v-if="loading == true">
       SPINNER
@@ -98,15 +98,35 @@ var Search = Vue.component("Search", {
    GetSearch: function(val) {
      this.loading = true
       console.log("GET SearchQery:", this.searchterm);
+
+      ApiData = {}
+
+      console.log("this.section",this.section);
+
+      if (this.section == undefined) {
+        console.log("SECTION undefined");
+        ApiData = {
+          PWD: AdminHash,
+          Method: "list",
+          DATA:{
+           ListModule: "ListFullSearch",
+           Searchterm : this.searchterm,
+          },
+        }
+      }else{
+        console.log("section NOT undefined");
+        ApiData = {
+          PWD: AdminHash,
+          Method: "list",
+          DATA:{
+           ListModule: "PathHierarchy",
+           Path : this.section,
+          },
+        }
+      }
+
       // POST /someUrl
-      this.$http.post(ApiUrl, {
-        PWD: AdminHash,
-        Method: "list",
-        DATA:{
-         ListModule: "ListFullSearch",
-         Searchterm : this.searchterm,
-        },
-      }).then(response => {
+      this.$http.post(ApiUrl, ApiData ).then(response => {
 
         // get status
         //response.status;

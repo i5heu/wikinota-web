@@ -24,14 +24,28 @@ h1{
 }
 
 .namespace{
-  background: #014663;
-  color: #fff;
-  border-radius: 5px;
-  padding-left: 3px;
-  padding-right: 3px;
+  //background: #014663;
+  color: #0010ff;
+  padding-left: 1px;
+  padding-right: 1px;
   min-width: 30px;
   min-height: 1em;
 }
+
+.PathContainer{
+  margin:3px;
+  background: #fbfbfb;
+  border: 1px solid #ececec;
+  padding: 3px;
+  border-radius: 3px;
+  margin:4px;
+  font-size: 110%;
+}
+
+.Path{
+  margin:0;
+}
+
 
 .time{
   font-size: 0.8em;
@@ -52,6 +66,7 @@ h1{
 
 .EditButton{
   float: right;
+  margin-left: 8px;
   font-size: 110%;
   padding: 5px;
   background: black;

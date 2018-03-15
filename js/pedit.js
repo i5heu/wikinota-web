@@ -33,12 +33,12 @@ const pEdit = {
       <span class="sr-only">Loading...</span>
     </div>
     <div v-else>
-      <div class="PathContainer">
-      <span class="namespace edit path"contenteditable="true" @blur="updateHtml" name="Path">{{PC.Path}}</span><span class="path" contenteditable="true" @blur="updateHtml" name="Path2">{{PC.Path2}}</span>
+      <div class="PathContainer" v-on:click="focusPath2">
+      <div class="namespace edit path"contenteditable="true" @blur="updateHtml" name="Path">{{PC.Path}}</div><div class="path editPath2" contenteditable="true" @blur="updateHtml" name="Path2" ref="Path2" >{{PC.Path2}}</div>
       </div>
 
       Title1: <span class="edit" contenteditable="true" @blur="updateHtml" name="Title2">{{ PC.Title2 }}</span><br>
-      Title2: <span class="edit"contenteditable="true" @blur="updateHtml" name="Title1">{{PC.Title1}}</span>
+      Title2: <span class="edit" contenteditable="true" @blur="updateHtml" name="Title1">{{PC.Title1}}</span>
       <table class="time">
         <tr>
           <td>ID </td>
@@ -86,6 +86,11 @@ const pEdit = {
       var foo = e.target.getAttribute("name")
       this.PC[foo] = e.target.innerHTML
       console.log("UPDATING this.PC." + foo, "  to-->", this.PC[foo]);
+    },
+    focusPath2: function(e) {
+      if(e.target.getAttribute("name") != "Path"){
+        this.$refs.Path2.focus();
+      }
     },
     SendEdit: function() {
       this.loading = true

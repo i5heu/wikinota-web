@@ -156,13 +156,5 @@ var app = new Vue({
   data: {
     menue: false,
     PageContent: ""
-  },
-  methods: {},
-  beforeMount() {}
-
+  }
 })
-
-
-function HighlightPath(path){
-  return "<span background='red'>PAAAA</span> "
-}

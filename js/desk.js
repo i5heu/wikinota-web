@@ -151,13 +151,13 @@ const GetDesktop = {
       ]
       }).then(response => {
         // get status
-        response.status;
+        //response.status;
 
         console.log("API-", response.status, "->", AdminHash, "-->",response.statusText);
 
 
         // get 'Expires' header
-        response.headers.get('Expires');
+        //response.headers.get('Expires');
 
         // get body data
         this.tmpjson = JSON.parse(response.body);
@@ -216,7 +216,9 @@ const GetPageByURL = {
   template: `
   <div id="Page">
   <div id="PageHierarchy">
-    PageHierarchy:
+   <span v-if="PC.PathUpDisable == false">
+    <router-link class="EditButton PathUp" :to="{ name: 'page', params: { path : PC.PathUp }}"><i class="fa fa-chevron-up"></i></router-link>
+   </span>
     <table>
 
     <tr>
@@ -311,8 +313,6 @@ const GetPageByURL = {
         return this.PC
 
 
-
-
       }, response => {
         // error callback
         console.log("API-ERROR");
@@ -356,7 +356,19 @@ const GetPageByURL = {
         this.PC.Path1 = Path1tmp
 
 
+        var PathUp = this.path
+        console.log("FIEEEEEERRRDDXDDD Split lenght", this.path, this.path.split(":").length-1);
+        var PathUptmp = PathUp.substring(0,PathUp.lastIndexOf(':'))
 
+        if (this.path.split(":").length-1 < 1){
+          console.log("PathUp To Short:", this.path.split(":").length-1);
+          this.PC.PathUpDisable = true
+          return
+        }else{
+          this.PC.PathUpDisable = false
+          this.PC.PathUp = PathUptmp
+          console.log("PathUp Not To Short:", PathUptmp);
+        }
 
 
       }, response => {

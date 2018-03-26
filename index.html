@@ -82,9 +82,14 @@
       <div v-show="CheckModalvar() == true" style="display:none;" class="modal-mask">
         <div>
           <div class="modal" id="AppLogin">
+            UserName:
+            <input type="text" @keyup.enter="HashSave(username_log, pwd_log)" v-model="username_log" placeholder="insert username" /><br>
             PassWD:
-            <input type="password" @keyup.enter="HashSave(message)" v-model="message" placeholder="insert password" /><br>
-            <button v-on:click="HashSave(message)">Login</button>
+            <input type="password" @keyup.enter="HashSave(username_log, pwd_log)" v-model="pwd_log" placeholder="insert password" /><br>
+            <button v-on:click="HashSave(username_log, pwd_log)">Login</button><br><br>
+
+            <a href="/Impressum.html">Impressum</a>
+            <a href="/Datenschutz.html">Datenschutz</a>
 
           </div>
         </div>

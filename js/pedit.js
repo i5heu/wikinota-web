@@ -96,7 +96,7 @@ const pEdit = {
       this.loading = true
       // POST /someUrl
       this.$http.post(ApiUrl, {
-        PWD: AdminHash,
+        PWD: PwdHash,
         Method: "create_item",
         DATA: {
           Path: this.PC.Path+this.PC.Path2,
@@ -119,7 +119,7 @@ const pEdit = {
         resJson = JSON.parse(response.body)
 
 
-        console.log("API- Write Item - ", AdminHash);
+        console.log("API- Write Item - ", PwdHash);
 
         // get status text
         if (resJson.Error == false) {
@@ -205,7 +205,7 @@ const pEdit = {
       this.loading = true
       // POST /someUrl
       this.$http.post(ApiUrl, {
-        PWD: AdminHash,
+        PWD: PwdHash,
         Method: "list",
         DATA:{
           ListModule: "Path",
@@ -215,7 +215,7 @@ const pEdit = {
         // get status
         response.status
 
-        console.log("API-", response.status, "->", AdminHash)
+        console.log("API-", response.status, "->", PwdHash)
 
         // get status text
         // response.statusText

@@ -1,7 +1,8 @@
 var SHA512 = new Hashes.SHA512
 var ApiUrl = "/api"
 var MultiApiUrl = "/multiapi"
-var AdminHash = localStorage.AdminHash
+var UserName = localStorage.UserName
+var PwdHash = localStorage.PwdHash
 Vue.config.devtools = true
 Vue.use(VueRouter)
 
@@ -41,27 +42,44 @@ Vue.component("wn-login", {
   data: function() {
     return {
       modalvar: "",
-      message: '',
-      AdminHash: localStorage.AdminHash
+      username_log: "",
+      pwd_log: '',
+      UserHash: localStorage.UserHash,
+      PwdHash: localStorage.PwdHash
+
     }
   },
   methods: {
-    HashSave: function(message) {
-      if (message != "") {
-        this.AdminHash = SHA512.hex(message)
-        localStorage.AdminHash = this.AdminHash
-        AdminHash = this.AdminHash
+    HashSave: function(username_log,pwd_log) {
+      if (pwd_log != "") {
+        this.pwd_log = SHA512.hex(pwd_log)
+        localStorage.PwdHash = this.pwd_log
+        PwdHash = this.pwd_log
+
+        localStorage.UserName = this.username_log
+        UserName = this.username_log
 
         location.reload();
       }
     },
     LoginChek: function() {
-      AdminHash = localStorage.AdminHash
-      if (localStorage.AdminHash && localStorage.AdminHash.length) {
-        if (localStorage.AdminHash.length == "") {
+      if (localStorage.PwdHash && localStorage.PwdHash.length) {
+        if (localStorage.PwdHash.length == "") {
           this.modalvar = "HashSave"
+          console.log("LoginData is NOT there");
         }
       } else {
+        console.log("LoginData is NOT there");
+        this.modalvar = "HashSave"
+      }
+
+      if (localStorage.UserName && localStorage.UserName.length) {
+        if (localStorage.UserName.length == "") {
+          this.modalvar = "HashSave"
+          console.log("LoginData is NOT there");
+        }
+      } else {
+        console.log("LoginData is NOT there");
         this.modalvar = "HashSave"
       }
 

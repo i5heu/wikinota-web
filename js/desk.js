@@ -130,8 +130,8 @@ const GetDesktop = {
   `,
   methods: {
     GetPage: function() {
-      if(localStorage.AdminHash == "" || localStorage.AdminHash == null || localStorage.AdminHash == 0){
-        console.log("DESK- REUTRN NO AdminHash");
+      if(localStorage.PwdHash == "" || localStorage.PwdHash == null || localStorage.PwdHash == 0){
+        console.log("DESK- REUTRN NO PwdHash");
         return
       }
       // POST /someUrl
@@ -139,12 +139,14 @@ const GetDesktop = {
 
           "MultiAPI":[
             {
-              PWD: AdminHash,
+              USR : UserName,
+              PWD: PwdHash,
               Method: "list",
               DATA:{"ListModule":"ListArticleDesktop"}
             },
             {
-              PWD: AdminHash,
+              USR : UserName,
+              PWD: PwdHash,
               Method: "list",
               DATA:{"ListModule":"ListPathMainSection"}
             },
@@ -153,7 +155,7 @@ const GetDesktop = {
         // get status
         //response.status;
 
-        console.log("API-", response.status, "->", AdminHash, "-->",response.statusText);
+        console.log("API-", response.status, "->", PwdHash, "-->",response.statusText);
 
 
         // get 'Expires' header
@@ -165,7 +167,7 @@ const GetDesktop = {
         this.DATA = this.tmpjson
 
         if(this.tmpjson.Error=="authentication failed"){
-          localStorage.AdminHash = ""
+          localStorage.PwdHash = ""
           location.reload();
         }
 
@@ -281,7 +283,7 @@ const GetPageByURL = {
     GetPage: function() {
       // POST /someUrl
       this.$http.post(ApiUrl, {
-        PWD: AdminHash,
+        PWD: PwdHash,
         Method: "list",
         DATA:{
           ListModule: "Path",
@@ -292,7 +294,7 @@ const GetPageByURL = {
         // get status
         response.status;
 
-        console.log("API-", response.status, "->", AdminHash);
+        console.log("API-", response.status, "->", PwdHash);
 
         // get status text
         response.statusText;
@@ -321,7 +323,7 @@ const GetPageByURL = {
 
       //GET PageHierarchy
       this.$http.post(ApiUrl, {
-        PWD: AdminHash,
+        PWD: PwdHash,
         Method: "list",
         DATA:{
           ListModule: "PathHierarchy",
@@ -332,7 +334,7 @@ const GetPageByURL = {
         // get status
       //  response.status;
 
-        console.log("API-", response.status, "->", AdminHash);
+        console.log("API-", response.status, "->", PwdHash);
 
         // get status text
       //  response.statusText;

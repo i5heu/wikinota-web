@@ -106,7 +106,7 @@ var Search = Vue.component("Search", {
       if (this.section == undefined) {
         console.log("SECTION undefined");
         ApiData = {
-          PWD: AdminHash,
+          PWD: PwdHash,
           Method: "list",
           DATA:{
            ListModule: "ListFullSearch",
@@ -116,7 +116,7 @@ var Search = Vue.component("Search", {
       }else{
         console.log("section NOT undefined");
         ApiData = {
-          PWD: AdminHash,
+          PWD: PwdHash,
           Method: "list",
           DATA:{
            ListModule: "PathHierarchy",
@@ -131,7 +131,7 @@ var Search = Vue.component("Search", {
         // get status
         //response.status;
 
-        console.log("API-", response.status, "->", AdminHash);
+        console.log("API-", response.status, "->", PwdHash);
 
         // get status text
         //response.statusText;

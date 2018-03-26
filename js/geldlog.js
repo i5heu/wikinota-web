@@ -50,13 +50,13 @@ const Geldlog = {
       this.loading = true
       // POST /someUrl
       this.$http.post(ApiUrl, {
-        PWD: AdminHash,
+        PWD: PwdHash,
         Method: "Desk",
       }).then(response => {
         // get status
         response.status;
 
-        console.log("API-", response.status, "->", AdminHash);
+        console.log("API-", response.status, "->", PwdHash);
 
         // get status text
         response.statusText;
@@ -87,7 +87,7 @@ const Geldlog = {
       this.Sending = true
       // POST /someUrl
       AddToSyncQueue({
-        PWD: AdminHash,
+        PWD: PwdHash,
         Method: "ItemWrite",
         APP: "geldlog",
         Timecreate: CurentTimestamp(),

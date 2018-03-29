@@ -139,13 +139,13 @@ const GetDesktop = {
 
           "MultiAPI":[
             {
-              USR : UserName,
+              UserName : UserName,
               PWD: PwdHash,
               Method: "list",
               DATA:{"ListModule":"ListArticleDesktop"}
             },
             {
-              USR : UserName,
+              UserName : UserName,
               PWD: PwdHash,
               Method: "list",
               DATA:{"ListModule":"ListPathMainSection"}
@@ -283,6 +283,7 @@ const GetPageByURL = {
     GetPage: function() {
       // POST /someUrl
       this.$http.post(ApiUrl, {
+        UserName : UserName,
         PWD: PwdHash,
         Method: "list",
         DATA:{
@@ -323,6 +324,7 @@ const GetPageByURL = {
 
       //GET PageHierarchy
       this.$http.post(ApiUrl, {
+        UserName : UserName,
         PWD: PwdHash,
         Method: "list",
         DATA:{

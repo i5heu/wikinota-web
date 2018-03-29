@@ -50,6 +50,7 @@ const Geldlog = {
       this.loading = true
       // POST /someUrl
       this.$http.post(ApiUrl, {
+        UserName : UserName,
         PWD: PwdHash,
         Method: "Desk",
       }).then(response => {
@@ -87,6 +88,7 @@ const Geldlog = {
       this.Sending = true
       // POST /someUrl
       AddToSyncQueue({
+        UserName : UserName,
         PWD: PwdHash,
         Method: "ItemWrite",
         APP: "geldlog",

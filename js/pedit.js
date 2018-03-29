@@ -96,6 +96,7 @@ const pEdit = {
       this.loading = true
       // POST /someUrl
       this.$http.post(ApiUrl, {
+        UserName : UserName,
         PWD: PwdHash,
         Method: "create_item",
         DATA: {
@@ -205,6 +206,7 @@ const pEdit = {
       this.loading = true
       // POST /someUrl
       this.$http.post(ApiUrl, {
+        UserName : UserName,
         PWD: PwdHash,
         Method: "list",
         DATA:{

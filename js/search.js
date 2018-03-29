@@ -106,6 +106,7 @@ var Search = Vue.component("Search", {
       if (this.section == undefined) {
         console.log("SECTION undefined");
         ApiData = {
+          UserName : UserName,
           PWD: PwdHash,
           Method: "list",
           DATA:{
@@ -116,6 +117,7 @@ var Search = Vue.component("Search", {
       }else{
         console.log("section NOT undefined");
         ApiData = {
+          UserName : UserName,
           PWD: PwdHash,
           Method: "list",
           DATA:{

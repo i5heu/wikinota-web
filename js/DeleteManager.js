@@ -35,6 +35,7 @@ const DeleteManager = {
     GetPage: function() {
       // POST /someUrl
       this.$http.post(ApiUrl, {
+        UserName : UserName,
         PWD: PwdHash,
         Method: "ItemListRead",
       }).then(response => {
@@ -75,6 +76,7 @@ const DeleteManager = {
     Delete: function(ID) {
       // POST /someUrl
       this.$http.post(ApiUrl, {
+        UserName : UserName,
         PWD: PwdHash,
         Method: "ItemDelete",
         ItemID: ID,

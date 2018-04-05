@@ -3,7 +3,7 @@
 GELDLOG IS disabled BECAUSE ITS NOT AN MVP FEATURE!!!!
 
 
-*/
+
 
 
 const Geldlog = {
@@ -107,3 +107,6 @@ const Geldlog = {
     this.GetPage()
   }
 };
+
+
+*/

@@ -145,11 +145,11 @@ const router = new VueRouter({
         new: true
       }
     },
-    {
-      path: '/geldlog',
-      name: "geldlog",
-      component: Geldlog
-    },
+    // {
+    //   path: '/geldlog',
+    //   name: "geldlog",
+    //   component: Geldlog
+    // },
     {
       path: '/delete',
       name: "delete",

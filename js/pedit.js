@@ -14,6 +14,9 @@ const pEdit = {
     new: {
       default: false
     },
+    overwrite: {
+      default: false
+    },
     APP: {
       default: "APP"
     }
@@ -95,12 +98,18 @@ const pEdit = {
     SendEdit: function() {
       this.loading = true
       // POST /someUrl
+
+     if (this.PC.Path+this.PC.Path2 == this.path){
+       this.overwrite = true
+     }
+
       this.$http.post(ApiUrl, {
         UserName : UserName,
         PWD: PwdHash,
         Method: "create_item",
         DATA: {
           Path: this.PC.Path+this.PC.Path2,
+          Overwrite:this.overwrite,
           ItemID: this.PC.ItemID,
           APP: this.PC.APP,
           Timecreate: this.PC.Timecreate,

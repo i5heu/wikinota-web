@@ -220,6 +220,7 @@ const GetPageByURL = {
   template: `
   <div id="Page">
   <div id="PageHierarchy">
+  <span id="PathHierarchyPath">{{this.path}}</span>
    <span v-if="PH.PathUpDisable == false">
     <router-link class="EditButton PathUp" :to="{ name: 'page', params: { path : PH.PathUp }}"><i class="fa fa-chevron-up"></i></router-link>
    </span>

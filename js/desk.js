@@ -206,7 +206,9 @@ const GetPageByURL = {
     return {
       PC: "PageContend NO DATA",
       PH :"PageHierarchy NO DATA",
-      loading: true
+      loading: true,
+      modal: false,
+      deleteStatus: "no Status"
     }
   },
   props: {
@@ -218,20 +220,20 @@ const GetPageByURL = {
   template: `
   <div id="Page">
   <div id="PageHierarchy">
-   <span v-if="PC.PathUpDisable == false">
-    <router-link class="EditButton PathUp" :to="{ name: 'page', params: { path : PC.PathUp }}"><i class="fa fa-chevron-up"></i></router-link>
+   <span v-if="PH.PathUpDisable == false">
+    <router-link class="EditButton PathUp" :to="{ name: 'page', params: { path : PH.PathUp }}"><i class="fa fa-chevron-up"></i></router-link>
    </span>
     <table>
 
     <tr>
       <th>Path</th>
-      <th>Title1</th>
-      <th>Title2</th>
+      <!--<th>Title1</th>
+      <th>Title2</th>-->
     </tr>
     <tr v-for="item in PH">
       <td><router-link :to="{ name: 'page', params: { path : item.Path }}">{{ item.Path }}</router-link></td>
-      <td><span >{{ item.Title1 }}</span></td>
-      <td><span >{{ item.Title2 }}</span></td>
+      <!--<td><span >{{ item.Title1 }}</span></td>
+      <td><span >{{ item.Title2 }}</span></td>-->
     </tr>
 
 
@@ -272,9 +274,22 @@ const GetPageByURL = {
       Tags:<br>
       {{PC.Tags1}}
 
+      <button v-on:click="Delete()" class="DelButton">DELETE</button>
+
     </div>
 
     </div>
+
+<div v-if="modal" class="modal-mask">
+  <div class="modal">
+      Delete Item?<br>
+
+      <button v-on:click="CloseModal()" >Cancle</button>-------------
+      <button v-on:click="DeleteTRUE()" class="DelButton">DELETE</button>
+
+      <div>STATUS: {{ deleteStatus }}</div>
+    </div>
+  </div>
 </div>
   `,
   methods: {
@@ -306,10 +321,23 @@ const GetPageByURL = {
         // get body data
         this.json = JSON.parse(response.body);
 
+        console.log("this.json.DATA.List[0] ----",this.json.DATA.List[0]);
+
         this.PC = this.json.DATA.List[0]
         this.PC.Text1 = marked(this.PC.Text1, {
           sanitize: true
         })
+
+
+      console.log("DEBUG PATH ---- PC.Path:",this.PC.Path);
+      var Path2 = this.path
+      var Path2tmp = Path2.substring(Path2.indexOf(':')+1)
+      this.PC.Path2 = Path2tmp
+
+      var Path1 = this.path
+      var Path1tmp = Path1.substring(0,Path1.indexOf(':')+1)
+      this.PC.Path1 = Path1tmp
+
 
         console.log(this.PC.Path);
         this.loading = false
@@ -351,26 +379,27 @@ const GetPageByURL = {
         //this.loading = false
         //return this.PC
 
-        var Path2 = this.PC.Path
+        console.log("DEBUG PATH ---- PC.Path:",this.PC.Path);
+        var Path2 = this.path
         var Path2tmp = Path2.substring(Path2.indexOf(':')+1)
-        this.PC.Path2 = Path2tmp
+        this.PH.Path2 = Path2tmp
 
-        var Path1 = this.PC.Path
+        var Path1 = this.path
         var Path1tmp = Path1.substring(0,Path1.indexOf(':')+1)
-        this.PC.Path1 = Path1tmp
+        this.PH.Path1 = Path1tmp
 
 
         var PathUp = this.path
-        console.log("FIEEEEEERRRDDXDDD Split lenght", this.path, this.path.split(":").length-1);
+        console.log("FIEEEEEERRRDDXDDD Split lenght -----", this.path,"--------" ,this.path.split(":").length-1);
         var PathUptmp = PathUp.substring(0,PathUp.lastIndexOf(':'))
 
         if (this.path.split(":").length-1 < 1){
           console.log("PathUp To Short:", this.path.split(":").length-1);
-          this.PC.PathUpDisable = true
+          this.PH.PathUpDisable = true
           return
         }else{
-          this.PC.PathUpDisable = false
-          this.PC.PathUp = PathUptmp
+          this.PH.PathUpDisable = false
+          this.PH.PathUp = PathUptmp
           console.log("PathUp Not To Short:", PathUptmp);
         }
 
@@ -381,7 +410,54 @@ const GetPageByURL = {
       });
 
 
-    }
+    },
+   Delete: function() {
+     console.log("DELETE TRIGGERD");
+     this.modal = true
+   },
+  CloseModal: function() {
+    console.log("CloseModal TRIGGERD");
+    this.modal = false
+  },
+  DeleteTRUE: function() {
+    console.log("DeleteTRUE TRIGGERD");
+
+    // POST /someUrl
+    this.$http.post(ApiUrl, {
+      UserName : UserName,
+      PWD: PwdHash,
+      Method: "delete_item",
+      DATA:{
+        Path: this.path,
+      },
+    }).then(response => {
+
+      // get status
+      response.status;
+
+      console.log("API-", response.status, "->", PwdHash);
+
+      // get status text
+      response.statusText;
+
+      // get 'Expires' header
+      response.headers.get('Expires');
+
+      // get body data
+      this.json = JSON.parse(response.body);
+
+      this.deleteStatus = this.json.DATA.Status
+
+      setTimeout(function(){  console.log("PUSH TO HOME"); router.push({name:"home"}); } , 1000);
+
+      return
+
+
+    }, response => {
+      // error callback
+      console.log("API-ERROR");
+    });
+    },
   },
   beforeMount() {
     console.log("GetPageByURL beforeMount triggerd");

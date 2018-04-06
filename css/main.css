@@ -123,6 +123,11 @@ button[disabled]{
   background-color: #7cc4e2;
 }
 
+.DelButton{
+  background: #e82020;
+  float: right;
+}
+
 /*############### STRUCTURE ################*/
 body{
   background: #f7f7f7;

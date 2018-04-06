@@ -37,11 +37,12 @@ const pEdit = {
     </div>
     <div v-else>
       <div class="PathContainer" v-on:click="focusPath2">
-      <div class="namespace edit path" contenteditable="true" @blur="updateHtml" name="Path">{{PC.Path}}</div><div class="path editPath2" contenteditable="true" @blur="updateHtml" name="Path2" ref="Path2" >{{PC.Path2}}</div>
+      <div class="namespace edit path" contenteditable="true" @blur="updateHtml" name="Path">{{PC.Path}}</div>
+      <div class="path2 editPath2" contenteditable="true" @blur="updateHtml" name="Path2" ref="Path2" >{{PC.Path2}}</div>
       </div>
 
       Title1: <span class="edit" contenteditable="true" @blur="updateHtml" name="Title2">{{ PC.Title2 }}</span><br>
-      Title2: <span class="edit" contenteditable="true" @blur="updateHtml" name="Title1">{{PC.Title1}}</span>
+      Title2: <span class="edit" contenteditable="true" @blur="updateHtml" name="Title1">{{ PC.Title1 }}</span>
       <table class="time">
         <tr>
           <td>ID </td>
@@ -86,17 +87,21 @@ const pEdit = {
   `,
   methods: {
     updateHtml: function(e) {
-      var foo = e.target.getAttribute("name")
+      var foo = e.target.getAttribute("name");
 
+      console.log("PATH2---", this.PC.Path2);
       this.PC[foo] = e.target.innerText;
+      e.target.innerText = this.PC[foo];
+      console.log("PATH2---", this.PC.Path2);
       console.log("UPDATING this.PC." + foo, "  to-->", this.PC[foo]);
     },
-    focusPath2: function(e) {
+     focusPath2: function(e) { //Will focus Path2 if klick on parent
       if(e.target.getAttribute("name") != "Path"){
         this.$refs.Path2.focus();
       }
     },
     SendEdit: function() {
+      console.log("SEND EDIT");
       this.loading = true
       // POST /someUrl
 
@@ -154,10 +159,11 @@ const pEdit = {
       });
     },
     CreateEmptyPage: function() {
+      console.log("CREATE EMPTY PAGE");
       this.PC = "NewPage"
 
       var mokupjson = `
-{"DATA":[{"APP":"page","Timecreate":"0001-01-01T00:00:00Z","Timelastedit":"","Public":false,"Title1":"main","Title2":"main","Text1":"","Text2":"","Tags1":"","Num1":{"Float64":0,"Valid":true},"Num2":{"Float64":0,"Valid":true},"Num3":{"Float64":0,"Valid":true}}]}
+{"DATA":[{"path":"page:main","APP":"page","Timecreate":"0001-01-01T00:00:00Z","Timelastedit":"","Public":false,"Title1":"main","Title2":"main","Text1":"","Text2":"","Tags1":"","Num1":{"Float64":0,"Valid":true},"Num2":{"Float64":0,"Valid":true},"Num3":{"Float64":0,"Valid":true}}]}
       `
 
       this.json = JSON.parse(mokupjson)
@@ -213,6 +219,7 @@ const pEdit = {
 
     },
     GetPage: function() {
+      console.log("GET PAGE");
       this.loading = true
       // POST /someUrl
       this.$http.post(ApiUrl, {

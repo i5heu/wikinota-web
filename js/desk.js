@@ -208,7 +208,8 @@ const GetPageByURL = {
       PH :"PageHierarchy NO DATA",
       loading: true,
       modal: false,
-      deleteStatus: "no Status"
+      deleteStatus: "no Status",
+      NotExist: false
     }
   },
   props: {
@@ -246,6 +247,11 @@ const GetPageByURL = {
       <span class="sr-only">Loading...</span>
     </div>
     <div v-else>
+
+    <div class="emptyPath" v-if="NotExist == true" >
+        DATA IS NOT EXISTENT FOR FOLOWING PATH <br> <span style="border:1px solid black;">{{ this.path }}</span>
+    </div>
+
     <div class="PathContainer">
     <span class="namespace path" >{{PC.Path1}}</span><span class="path">{{PC.Path2}}</span>
     </div>
@@ -278,7 +284,6 @@ const GetPageByURL = {
       <button v-on:click="Delete()" class="DelButton">DELETE</button>
 
     </div>
-
     </div>
 
 <div v-if="modal" class="modal-mask">
@@ -297,6 +302,11 @@ const GetPageByURL = {
 
     //GET ItemDATA
     GetPage: function() {
+      if(this.path == "page"){
+        router.push({name:"home"})
+        return
+      }
+
       // POST /someUrl
       this.$http.post(ApiUrl, {
         UserName : UserName,
@@ -322,6 +332,15 @@ const GetPageByURL = {
         // get body data
         this.json = JSON.parse(response.body);
 
+
+        if(this.json.DATA.List == null){
+          console.log("THERE IS NO DATA FOR THIS PATH");
+
+          this.loading = false
+          this.NotExist = true
+
+          return
+        }
         console.log("this.json.DATA.List[0] ----",this.json.DATA.List[0]);
 
         this.PC = this.json.DATA.List[0]
@@ -330,14 +349,14 @@ const GetPageByURL = {
         })
 
 
-      console.log("DEBUG PATH ---- PC.Path:",this.PC.Path);
-      var Path2 = this.path
-      var Path2tmp = Path2.substring(Path2.indexOf(':')+1)
-      this.PC.Path2 = Path2tmp
+        console.log("DEBUG PATH ---- PC.Path:",this.PC.Path);
+        var Path2 = this.path
+        var Path2tmp = Path2.substring(Path2.indexOf(':')+1)
+        this.PC.Path2 = Path2tmp
 
-      var Path1 = this.path
-      var Path1tmp = Path1.substring(0,Path1.indexOf(':')+1)
-      this.PC.Path1 = Path1tmp
+        var Path1 = this.path
+        var Path1tmp = Path1.substring(0,Path1.indexOf(':')+1)
+        this.PC.Path1 = Path1tmp
 
 
         console.log(this.PC.Path);
@@ -380,7 +399,7 @@ const GetPageByURL = {
         //this.loading = false
         //return this.PC
 
-        console.log("DEBUG PATH ---- PC.Path:",this.PC.Path);
+        console.log("DEBUG PATH ---- PC.Path:",this.path);
         var Path2 = this.path
         var Path2tmp = Path2.substring(Path2.indexOf(':')+1)
         this.PH.Path2 = Path2tmp
@@ -449,7 +468,7 @@ const GetPageByURL = {
 
       this.deleteStatus = this.json.DATA.Status
 
-      setTimeout(function(){  console.log("PUSH TO HOME"); router.push({name:"home"}); } , 1000);
+      setTimeout(function(){  console.log("PUSH TO HOME"); router.push({name:"home"}); } , 500);
 
       return
 
@@ -461,6 +480,10 @@ const GetPageByURL = {
     },
   },
   beforeMount() {
+    if(this.path == "page"){
+      router.push({name:"home"})
+      return
+    }
     console.log("GetPageByURL beforeMount triggerd");
     this.GetPage()
   },

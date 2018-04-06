@@ -64,6 +64,12 @@ padding:3px;
   content: "Path > ";
 }
 
+.emptyPath{
+  background: #ffc85a;
+  padding:1em;
+  margin:1em;
+}
+
 .time{
   font-size: 0.8em;
 }

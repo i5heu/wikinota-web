@@ -45,6 +45,10 @@ h1{
   overflow: auto;
 }
 
+.PathContainer br {
+    display: none
+}
+
 .Path{
   margin:0;
   display: inline-block;

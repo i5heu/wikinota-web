@@ -37,7 +37,7 @@ const pEdit = {
     </div>
     <div v-else>
       <div class="PathContainer" v-on:click="focusPath2">
-      <div class="namespace edit path"contenteditable="true" @blur="updateHtml" name="Path">{{PC.Path}}</div><div class="path editPath2" contenteditable="true" @blur="updateHtml" name="Path2" ref="Path2" >{{PC.Path2}}</div>
+      <div class="namespace edit path" contenteditable="true" @blur="updateHtml" name="Path">{{PC.Path}}</div><div class="path editPath2" contenteditable="true" @blur="updateHtml" name="Path2" ref="Path2" >{{PC.Path2}}</div>
       </div>
 
       Title1: <span class="edit" contenteditable="true" @blur="updateHtml" name="Title2">{{ PC.Title2 }}</span><br>
@@ -87,7 +87,8 @@ const pEdit = {
   methods: {
     updateHtml: function(e) {
       var foo = e.target.getAttribute("name")
-      this.PC[foo] = e.target.innerHTML
+
+      this.PC[foo] = e.target.innerText;
       console.log("UPDATING this.PC." + foo, "  to-->", this.PC[foo]);
     },
     focusPath2: function(e) {

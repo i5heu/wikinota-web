@@ -1,6 +1,8 @@
 var SHA512 = new Hashes.SHA512
 var ApiUrl = "/api"
-var AdminHash = localStorage.AdminHash
+var MultiApiUrl = "/multiapi"
+var UserName = localStorage.UserName
+var PwdHash = localStorage.PwdHash
 Vue.config.devtools = true
 Vue.use(VueRouter)
 
@@ -15,6 +17,7 @@ function CurentTimestamp() {
   var n = d.toISOString();
   return n
 }
+
 
 
 Vue.directive('focus', {
@@ -39,27 +42,44 @@ Vue.component("wn-login", {
   data: function() {
     return {
       modalvar: "",
-      message: '',
-      AdminHash: localStorage.AdminHash
+      username_log: "",
+      pwd_log: '',
+      UserHash: localStorage.UserHash,
+      PwdHash: localStorage.PwdHash
+
     }
   },
   methods: {
-    HashSave: function(message) {
-      if (message != "") {
-        this.AdminHash = SHA512.hex(message)
-        localStorage.AdminHash = this.AdminHash
-        AdminHash = this.AdminHash
+    HashSave: function(username_log,pwd_log) {
+      if (pwd_log != "") {
+        this.pwd_log = SHA512.hex(pwd_log)
+        localStorage.PwdHash = this.pwd_log
+        PwdHash = this.pwd_log
+
+        localStorage.UserName = this.username_log
+        UserName = this.username_log
 
         location.reload();
       }
     },
     LoginChek: function() {
-      AdminHash = localStorage.AdminHash
-      if (localStorage.AdminHash && localStorage.AdminHash.length) {
-        if (localStorage.AdminHash.length == "") {
+      if (localStorage.PwdHash && localStorage.PwdHash.length) {
+        if (localStorage.PwdHash.length == "") {
           this.modalvar = "HashSave"
+          console.log("LoginData is NOT there");
         }
       } else {
+        console.log("LoginData is NOT there");
+        this.modalvar = "HashSave"
+      }
+
+      if (localStorage.UserName && localStorage.UserName.length) {
+        if (localStorage.UserName.length == "") {
+          this.modalvar = "HashSave"
+          console.log("LoginData is NOT there");
+        }
+      } else {
+        console.log("LoginData is NOT there");
         this.modalvar = "HashSave"
       }
 
@@ -100,19 +120,19 @@ const router = new VueRouter({
       component: GetDesktop,
     },
     {
-      path: '/p/:title1',
+      path: '/h/:section',
       name: "namespace",
       component: Search,
       props: true
     },
     {
-      path: '/p/:title1/:title2',
+      path: '/p/:path',
       name: "page",
       component: GetPageByURL,
       props: true
     },
     {
-      path: '/p/:title1/:title2/edit',
+      path: '/p/:path/edit',
       name: "pedit",
       component: pEdit,
       props: true
@@ -125,11 +145,11 @@ const router = new VueRouter({
         new: true
       }
     },
-    {
-      path: '/geldlog',
-      name: "geldlog",
-      component: Geldlog
-    },
+    // {
+    //   path: '/geldlog',
+    //   name: "geldlog",
+    //   component: Geldlog
+    // },
     {
       path: '/delete',
       name: "delete",
@@ -154,8 +174,5 @@ var app = new Vue({
   data: {
     menue: false,
     PageContent: ""
-  },
-  methods: {},
-  beforeMount() {}
-
+  }
 })

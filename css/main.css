@@ -24,13 +24,50 @@ h1{
 }
 
 .namespace{
-  background: #014663;
-  color: #fff;
-  border-radius: 5px;
-  padding-left: 3px;
-  padding-right: 3px;
+  //background: #014663;
+  color: #0010ff;
+  padding-left: 1px;
+  padding-right: 1px;
   min-width: 30px;
   min-height: 1em;
+}
+
+.PathContainer{
+  margin:3px;
+  background: #fbfbfb;
+  border: 1px solid #ececec;
+  padding: 3px;
+  border-radius: 3px;
+  margin:4px;
+  font-size: 110%;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: auto;
+}
+
+.PathContainer br {
+    display: none
+}
+
+.Path{
+  margin:0;
+  display: inline-block;
+}
+
+#PathHierarchyPath{
+border-bottom: 1px solid black;
+padding:3px;
+}
+
+
+#PathHierarchyPath::before{
+  content: "Path > ";
+}
+
+.emptyPath{
+  background: #ffc85a;
+  padding:1em;
+  margin:1em;
 }
 
 .time{
@@ -52,6 +89,7 @@ h1{
 
 .EditButton{
   float: right;
+  margin-left: 8px;
   font-size: 110%;
   padding: 5px;
   background: black;
@@ -59,6 +97,7 @@ h1{
   border: 1px solid #fff;
   border-radius: 5px;
 }
+
 
 table{
   margin-top: 5px;
@@ -103,6 +142,11 @@ button{
 button:disabled,
 button[disabled]{
   background-color: #7cc4e2;
+}
+
+.DelButton{
+  background: #e82020;
+  float: right;
 }
 
 /*############### STRUCTURE ################*/
@@ -223,16 +267,35 @@ header {
 }
 
 
+/*################ Page #######################*/
+#Page{
+  display:flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+}
+
+
+/*################ PageHierarchy #######################*/
+#PageHierarchy{
+  overflow:  auto;
+  float: left;
+}
+#PageHierarchy table{
+  margin-top: 1em;
+}
+
 
 
 /*################ CONTENT #######################*/
 
 #content{
+  float: center;
   display: block;
   height: 100%;
   width:100%;
   max-width: 600px;
   margin:0 auto 0 auto;
+  min-margin-left: ;
   padding:10px;
   background: #fff;
 }
@@ -320,4 +383,11 @@ header {
 
 .edit{
   border-left:1px solid #ff0000;
+  min-width: 20px;
+
+}
+
+.editPath2{
+  padding : 0 10px 0 2px;
+  border: 1px solid #e4e4e4;
 }

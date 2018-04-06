@@ -41,7 +41,7 @@ Vue.component("wn-search", {
 
 var Search = Vue.component("Search", {
   props:{
-    title1: {
+    section: {
       type: String,
       default: ""
     },
@@ -62,8 +62,8 @@ var Search = Vue.component("Search", {
     <div v-if="searchterm">
       <h1>Search:"{{searchterm}}"</h1>
     </div>
-    <div v-if="title1">
-      <h1>Namespace:"{{title1}}"</h1>
+    <div v-if="section">
+      <h1>Section:"{{section}}"</h1>
     </div>
     <div v-if="loading == true">
       SPINNER
@@ -71,15 +71,17 @@ var Search = Vue.component("Search", {
     <div v-else>
     <table class="fancytable">
       <tr>
-      <th>Namespace</th>
-      <th>Title</th>
+      <th>Path</th>
+      <th>Title1</th>
+      <th>Title2</th>
       <th>Tags</th>
       <th>Public</th>
       </tr>
-      <tr v-for="item in SearchResult"  >
-          <td><span class="namespace">{{item.Title1}}</span></td>
-          <td class="namespnamespaceace"><router-link :to="{ name: 'page', params: { title1: item.Title1, title2: item.Title2}}">{{item.Title2}}</router-link></td>
-          <td class="namespnamespaceace">{{item.Tags1}}</td>
+      <tr v-for="item in SearchResult.List"  >
+          <td><router-link :to="{ name: 'page', params: { path: item.Path}}">{{item.Path}}</router-link></td>
+          <td><span >{{item.Title1}}</span></td>
+          <td><span >{{item.Title2}}</span></td>
+          <td>{{item.Tags1}}</td>
           <td v-if="item.Public == true">
             PUBLIC
           </td>
@@ -96,19 +98,42 @@ var Search = Vue.component("Search", {
    GetSearch: function(val) {
      this.loading = true
       console.log("GET SearchQery:", this.searchterm);
+
+      ApiData = {}
+
+      console.log("this.section",this.section);
+
+      if (this.section == undefined) {
+        console.log("SECTION undefined");
+        ApiData = {
+          UserName : UserName,
+          PWD: PwdHash,
+          Method: "list",
+          DATA:{
+           ListModule: "ListFullSearch",
+           Searchterm : this.searchterm,
+          },
+        }
+      }else{
+        console.log("section NOT undefined");
+        ApiData = {
+          UserName : UserName,
+          PWD: PwdHash,
+          Method: "list",
+          DATA:{
+           ListModule: "PathHierarchy",
+           Path : this.section,
+          },
+        }
+      }
+
       // POST /someUrl
-      this.$http.post(ApiUrl, {
-        PWD: AdminHash,
-        Method: "ItemSearch",
-        SearchAPP: "page",
-        SearchString: this.searchterm,
-        Title1 : this.title1
-      }).then(response => {
+      this.$http.post(ApiUrl, ApiData ).then(response => {
 
         // get status
         //response.status;
 
-        console.log("API-", response.status, "->", AdminHash);
+        console.log("API-", response.status, "->", PwdHash);
 
         // get status text
         //response.statusText;
@@ -117,7 +142,7 @@ var Search = Vue.component("Search", {
         response.headers.get('Expires');
 
         // get body data
-        this.json = JSON.parse(JSON.stringify(response.body));
+        this.json = JSON.parse(response.body);
 
         this.PC = this.json.DATA
 

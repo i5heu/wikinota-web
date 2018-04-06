@@ -35,13 +35,14 @@ const DeleteManager = {
     GetPage: function() {
       // POST /someUrl
       this.$http.post(ApiUrl, {
-        PWD: AdminHash,
+        UserName : UserName,
+        PWD: PwdHash,
         Method: "ItemListRead",
       }).then(response => {
         // get status
         response.status;
 
-        console.log("API-", response.status, "->", AdminHash);
+        console.log("API-", response.status, "->", PwdHash);
 
         // get status text
         response.statusText;
@@ -75,14 +76,15 @@ const DeleteManager = {
     Delete: function(ID) {
       // POST /someUrl
       this.$http.post(ApiUrl, {
-        PWD: AdminHash,
+        UserName : UserName,
+        PWD: PwdHash,
         Method: "ItemDelete",
         ItemID: ID,
       }).then(response => {
         // get status
         response.status;
 
-        console.log("API-", response.status, "->", AdminHash);
+        console.log("API-", response.status, "->", PwdHash);
 
         // get status text
         response.statusText;

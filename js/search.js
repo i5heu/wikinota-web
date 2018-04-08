@@ -103,7 +103,7 @@ var Search = Vue.component("Search", {
 
       console.log("this.section",this.section);
 
-      if (this.section == undefined) {
+      if (this.section == "") {
         console.log("SECTION undefined");
         ApiData = {
           UserName : UserName,

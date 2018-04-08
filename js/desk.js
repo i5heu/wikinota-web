@@ -33,7 +33,7 @@ var DesktopPageCategory = Vue.component("DesktopPageCategory", {
     <table>
         <tr v-for="item in ajson.List">
 
-          <td><router-link :to="{ name: 'namespace', params: { section: item.Sections}}">{{ item.Sections }}</router-link></td>
+          <td><router-link :to="{ name: 'namespace', params: { section: item.Link_VUE }}">{{ item.Sections }}</router-link></td>
         </tr>
     </table>
   </div>
@@ -169,6 +169,7 @@ const GetDesktop = {
         if(this.tmpjson.Error=="authentication failed"){
           localStorage.PwdHash = ""
           location.reload();
+          return
         }
 
         // for(DATAkey in this.DATA.List){
@@ -176,6 +177,17 @@ const GetDesktop = {
         // }
 
 
+
+        for (i in this.DATA[1].DATA.List){ //ADD ":" to the path so the category vue module is properly linked
+
+          if(this.DATA[1].DATA.List[i].Sections != "page:"){ //page: has alrdy an ":" at the end
+            this.DATA[1].DATA.List[i].Link_VUE = this.DATA[1].DATA.List[i].Sections + ":"
+          }else{
+            this.DATA[1].DATA.List[i].Link_VUE = this.DATA[1].DATA.List[i].Sections
+          }
+
+
+        }
 
 
 

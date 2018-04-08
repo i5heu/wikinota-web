@@ -57,6 +57,16 @@ var Search = Vue.component("Search", {
       json: null
     }
   },
+  watch: {
+    '$route.path' (to, from) {
+      console.log("SEARCH:","PATH CHANGE TRIGGER UPDATE");
+      this.GetSearch()
+    },
+    searchterm: function(val) {
+      console.log("SEARCH:","SEARCHTERM CHANGE TRIGGER UPDATE");
+    this.GetSearch()
+    }
+  },
   template: `
   <div class="content">
     <div v-if="searchterm">
@@ -89,11 +99,6 @@ var Search = Vue.component("Search", {
     </table>
   </div>
   `,
-  watch:{
-    searchterm: function(val) {
-    this.GetSearch()
-    }
-  },
   methods: {
    GetSearch: function(val) {
      this.loading = true

@@ -384,6 +384,7 @@ header {
 .edit{
   border-left:1px solid #ff0000;
   min-width: 20px;
+  min-height: 20vh;
 
 }
 

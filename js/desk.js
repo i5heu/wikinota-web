@@ -353,6 +353,8 @@ const GetPageByURL = {
 
           return
         }
+        
+        this.NotExist = false
         console.log("this.json.DATA.List[0] ----",this.json.DATA.List[0]);
 
         this.PC = this.json.DATA.List[0]

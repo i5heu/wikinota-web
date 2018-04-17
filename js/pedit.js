@@ -65,7 +65,7 @@ const pEdit = {
           <td>{{PC.APP}}</td>
         </tr>
       </table>
-      <textarea class="Text edit" v-model="PC.Text1">{{PC.Text1}}</textarea>
+      <textarea class="Text edit edit_main" v-model="PC.Text1">{{PC.Text1}}</textarea>
       <hr>
       <div>
         Notizen:<br>
